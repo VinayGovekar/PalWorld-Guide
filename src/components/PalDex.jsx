@@ -1,69 +1,37 @@
 
 import PalList from "./PalList"
 import PalSearchBar from "./PalSearchBar"
-
+import PalInformation from "../data/pals.json"
+import { useState } from "react"
 const PalDex = ()=>{
-    const PalInfo =[
-    {
-        id:1,
-        PalName:"Anubis",
-        PalImg:"https://genshinlab.com/wp-content/uploads/2024/01/Anubis-1.webp",
-        Desc:"Guardian of the Desert"
-    },
-    {
-        id:2,
-        PalName:"Astegon",
-        PalImg:"https://genshinlab.com/wp-content/uploads/2024/01/Astegon-1.webp",
-        Desc:"Black Ankylosaur"
-    },
-    {
-        id:3,
-        PalName:"Blazemut",
-        PalImg:"https://genshinlab.com/wp-content/uploads/2024/01/Blazamut-1.webp",
-        Desc:"Magma Kaiser"
-    },
-    {
-        id:4,
-        PalName:"Bushi",
-        PalImg:"https://genshinlab.com/wp-content/uploads/2024/01/Bushi-1.webp",
-        Desc:"Brandish Blade"
-    },
-    {
-        id:5,
-        PalName:"Broncherry",
-        PalImg:"https://genshinlab.com/wp-content/uploads/2024/01/Broncherry-1.webp",
-        Desc:"Overaffectionate"
-    },
-    {
-        id:6,
-        PalName:"Cattiva",
-        PalImg:"https://genshinlab.com/wp-content/uploads/2024/01/Cattiva-1.webp",
-        Desc:"Cat Helper"
-    },
-    {
-        id:7,
-        PalName:"Chikipi",
-        PalImg:"https://genshinlab.com/wp-content/uploads/2024/01/Chikipi-1.webp",
-        Desc:"Egg Layer"
-    },
-    {
-        id:8,
-        PalName:"Anubis",
-        PalImg:"https://genshinlab.com/wp-content/uploads/2024/01/Anubis-1.webp",
-        Desc:"Guardian of the Desert"
-    },
-    {
-        id:9,
-        PalName:"Anubis",
-        PalImg:"https://genshinlab.com/wp-content/uploads/2024/01/Anubis-1.webp",
-        Desc:"Guardian of the Desert"
+    const [PalInfo,setPalInformation] = useState(PalInformation)
+    const [searchPokemon,setSearchPokemon] = useState("")
+    const [showPalInfo,setShowPalInfo] = useState(false)
+
+    const onSearchChange = (event)=>{
+        var newFilterValue = event.target.value
+        if(newFilterValue!==""){
+            setSearchPokemon(newFilterValue)
+            var filteredPokemon = PalInfo
+                                    .filter(pal=>
+                                    pal.name.toLowerCase().includes(newFilterValue.toLowerCase()))
+            setPalInformation(filteredPokemon)
+        }
+        else{
+            setPalInformation(PalInformation)
+            setSearchPokemon("")
+        }
     }
-]
+
+    const onShowPalInfo=()=>{
+        setShowPalInfo(true)
+        console.log(showPalInfo)
+    }
+    
     return(
         <>
-        <PalSearchBar/>
-        <PalList PalInfo={PalInfo}/>
-        
+        <PalSearchBar SearchPokemon={searchPokemon} OnSearchChange={onSearchChange}/>
+        <PalList PalInfo={PalInfo} showPalInfo={showPalInfo} onShowPalInfo = {onShowPalInfo}/>
         </>
     )
 }
