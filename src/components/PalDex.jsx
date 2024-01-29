@@ -23,9 +23,10 @@ const PalDex = ()=>{
         }
     }
 
-    const onShowPalInfo=()=>{
+    const onShowPalInfo=(pal)=>{
+        console.log(pal)
         setShowPalInfo(true)
-        console.log(showPalInfo)
+        
     }
     
     return(
